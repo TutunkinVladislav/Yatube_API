@@ -56,7 +56,7 @@ class FollowSerializer(serializers.ModelSerializer):
             )
         ]
         
-    def validate(self, attrs):
-        if attrs['user'] == attrs['following']:
-            raise serializers.ValidationError('Нельзя подписаться на свои публикации!')
-        return attrs
+    # def validate(self, data):
+    #     if data['user'] == data['following']:
+    #         raise serializers.ValidationError('Нельзя подписаться на свои публикации!')
+    #     return data
