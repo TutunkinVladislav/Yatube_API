@@ -56,7 +56,7 @@ python manage.py runserver
 
 Для аутентификации используются JWT-токены.
 
-Для получения токена нужно выполнить POST запрос на: https://localhost:8000/auth/jwt/token/create/ с параметрами:
+Для получения токена нужно выполнить POST запрос на: http://127.0.0.1:8000/auth/jwt/create/ с параметрами:
 
 ```
 {
@@ -73,17 +73,8 @@ python manage.py runserver
 
 2. api/v1/posts/{id}/
    - `GET`: Просмотр поста по его id
-   - `UPDATE`, : Редактирование поста
+   - `PUT`, `PATCH`: Редактирование поста
    - `DELETE`: Удаление поста
-   
-3. api/v1/groups/
-   - `GET`: Просмотр групп
-   - `POST`: Создание группы
-   
-4. api/v1/groups/{id}/
-   - `GET`: Просмотр группы по её id
-   - `UPDATE`, : Редактирование группы
-   - `DELETE`: Удаление группы
    
 5. api/v1/posts/{post_id}/comments/
    - `GET`: Просмотр комментариев поста по его id
@@ -91,9 +82,5 @@ python manage.py runserver
    
 6. api/v1/posts/{post_id}/comments/{id}/
    - `GET`: Просмотр комментария по его id
-   - `UPDATE`, : Редактирование комментария
+   - `PUT`, `PATCH`: Редактирование комментария
    - `DELETE`: Удаление комментария
-   
-7. api/v1/follow/
-   - `GET`: Просмотр подписок пользователя
-   - `POST`: Создание подписки
