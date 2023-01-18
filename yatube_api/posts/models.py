@@ -8,7 +8,7 @@ class Group(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(unique=True)
     description = models.TextField()
-    
+
     def __str__(self) -> str:
         return self.title
 
@@ -46,7 +46,7 @@ class Follow(models.Model):
     following = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='following'
     )
-    
+
     class Meta:
         constraints = [
             models.UniqueConstraint(

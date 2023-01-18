@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField, PrimaryKeyRelatedField
+from rest_framework.relations import PrimaryKeyRelatedField, SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
 
-
-from posts.models import Comment, Post, Follow, Group
+from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -16,10 +15,10 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Post
-        
-        
+
+
 class GroupSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         fields = '__all__'
         model = Group
@@ -32,8 +31,8 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Comment
-        
-        
+
+
 class FollowSerializer(serializers.ModelSerializer):
     user = SlugRelatedField(
         slug_field='username',
@@ -42,10 +41,9 @@ class FollowSerializer(serializers.ModelSerializer):
     )
     following = SlugRelatedField(
         slug_field='username',
-        many=True,
-        queryset=Follow.objects.all()
+        queryset=User.objects.all()
     )
-    
+
     class Meta:
         fields = '__all__'
         model = Follow
@@ -55,8 +53,11 @@ class FollowSerializer(serializers.ModelSerializer):
                 fields=['user', 'following']
             )
         ]
-        
-    # def validate(self, data):
-    #     if data['user'] == data['following']:
-    #         raise serializers.ValidationError('Нельзя подписаться на свои публикации!')
-    #     return data
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if user == data['following']:
+            raise serializers.ValidationError(
+                'Нельзя подписаться на свои публикации!'
+            )
+        return data
